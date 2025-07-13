@@ -10,7 +10,7 @@ interface Props {
 }
 export default function Report({ id }: Props) {
   const searchParams = useSearchParams();
-  const { data, isError, isLoading } = useGetSingleReportQuery({ id });
+  const { data, isError, isLoading } = useGetSingleReportQuery(id);
   if (isError) {
     return <div>error occur while fetching query</div>;
   }
