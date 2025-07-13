@@ -67,6 +67,7 @@ export type FoodReport = {
     name: string;
     category: "Healthy" | "Neutral" | "Unhealthy";
     reason: string;
+    percentage: string;
   }[];
   description: string;
   health_score: number;
