@@ -78,16 +78,13 @@ export async function GET(_req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    // Connect to the database
     await dbConnect();
 
-    // Check user authentication
     const { userId } = await auth();
     if (!userId) {
       return NextResponse.json({ success: false, error: "unauthorized" }, { status: 401 });
     }
 
-    // Parse and validate incoming JSON
     const body = await req.json();
     const id = typeof body.id === "string" ? body.id : body.id?.id;
 
@@ -95,8 +92,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: "Invalid report ID" }, { status: 400 });
     }
 
-    // Fetch report from DB
-    const history = await History.findById(id).lean();
+    // 👇 Add type inference here
+    const history = await History.findById(id).lean<IHistory>();
     if (!history) {
       return NextResponse.json(
         { success: false, error: "No report found with this ID" },
@@ -104,7 +101,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { messages, ...report } = history;
+    const { messages, choice, imageUrl } = history;
+
     if (!messages) {
       return NextResponse.json(
         { success: false, error: "No content found in this report" },
@@ -112,14 +110,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Return successful response
     return NextResponse.json(
       {
         success: true,
         data: {
           messages,
-          type: report.choice,
-          imageUrl: report.imageUrl,
+          type: choice,
+          imageUrl,
         },
       },
       { status: 200 }
@@ -135,6 +132,7 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
 
 export async function DELETE(req: NextRequest) {
   try {
