@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import History from "@/models/History.model";
+import History ,{ IHistory }from "@/models/History.model";
 import { dbConnect } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
 import { Report } from "@/types";
