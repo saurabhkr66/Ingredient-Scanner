@@ -62,7 +62,7 @@ export default function HiddenReportsOnly() {
             )}
             <Menu
               id={report._id as string}
-              title={report.historyTitle}
+              tittle={report.historyTitle}
               hidden={report.hidden}
             />
           </div>

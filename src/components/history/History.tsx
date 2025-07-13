@@ -112,7 +112,7 @@ export default function History() {
             {/* ✅ Fix: Pass hidden prop here */}
             <Menu
               id={report._id as string}
-              title={report.historyTitle}
+              tittle={report.historyTitle}
               hidden={report.hidden}
             />
           </div>
